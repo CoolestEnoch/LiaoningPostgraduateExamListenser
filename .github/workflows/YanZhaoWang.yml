@@ -20,8 +20,7 @@ jobs:
 
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git clone https://github.com/CoolestEnoch/LiaoningPostgraduateExamListenser.git
-          cd LiaoningPostgraduateExamListenser
+          ls -al
           echo "#test" >> /.github/workflows/YanZhaoWang.yml
           git add -u .
           git commit -m "update"
