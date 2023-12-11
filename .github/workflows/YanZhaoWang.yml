@@ -19,7 +19,7 @@ jobs:
       - name: Execute Bash script
         run: |
 
-          
+        
           #!/bin/bash
 
           git config user.name github-actions
