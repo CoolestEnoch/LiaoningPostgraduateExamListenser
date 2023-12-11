@@ -2,9 +2,9 @@ name: YanZhaoWang
 
 on:
   workflow_dispatch:
-#  push:
-#  schedule:
-#    - cron: '*/10 * * * *'
+  push:
+  schedule:
+    - cron: '*/10 * * * *'
 
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
           content=$(curl -s "https://yz.chsi.com.cn/yzwb/" | grep -oP '<div class="yzwb-current-time">\K.*?(?=<)')
 
           # echo "$content"
-          if [[ $content == *确认* ]]; then
+          if [[ $content == *准考证* ]]; then
             echo "已开放准考证打印"
             
             # 添加注释符号
