@@ -25,7 +25,24 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           ls -al
-          echo "#test" >> .github/workflows/YanZhaoWang.yml
+
+
+          FILE=".github/workflows/YanZhaoWang.yml"  # 工作流程文件路径
+
+          # 检查工作流程文件是否存在
+          if [ ! -f "$FILE" ]; then
+            echo "工作流程文件 $FILE 不存在"
+            exit 1
+          fi
+
+          # 添加注释符号
+          sed -i 's/schedule:\n    - cron:/#&/' "$FILE"
+
+          echo "成功在工作流程文件 $FILE 中添加注释符号"
+
+
+
+          
           git add -u .
           git commit -m "update"
           git push
@@ -41,6 +58,3 @@ jobs:
             echo "未开放准考证打印"
             exit 0  # 如果文本内容不为"A"，则以退出码1退出
           fi
-#test
-#test
-#test
