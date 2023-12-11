@@ -1,0 +1,49 @@
+name: LiaoningExamWindow
+
+on:
+  workflow_dispatch:
+  push:
+  schedule:
+    - cron: '*/10 * * * *'
+
+
+jobs:
+  check_links:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Execute Bash script
+        run: |
+          ls -al
+
+          url="https://www.lnzsks.com/cxzx.html"
+          content=$(curl -s "$url")
+
+          # 使用awk和sed将<div class="cxzx_btn">标签中的所有<a>标签提取出来
+          links=$(echo "$content" | awk '/<div class="cxzx_btn"/,/<\/div>/ {print}' | sed -n '/<a/p')
+
+          # 遍历每个<a>标签，检查它是否包含文字
+          while read -r link; do
+            if echo "$link" | grep -iq "考场"; then
+              echo "Found a link with text '考场': $link\n\n"
+              echo "已开放考场信息查询"
+              sed -i '5,7 s/^/#/' .github/workflows/LiaoningExamWindow.yml
+              git config user.name github-actions
+              git config user.email github-actions@github.com
+              git add -u .
+              git commit -m "update by actions"
+              git push
+              echo "成功禁用当前workflow"
+              exit 1
+            fi
+          done <<< "$links"
+
+          # 如果没有任何一个<a>标签包含文字"考场"，则以退出码0退出
+          echo "当前未开放考场信息查询"
+          exit 0
