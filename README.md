@@ -1,7 +1,7 @@
 # 辽宁考研准考证和考场信息监听器
 
 
-***⚠️⚠️当下面两个都红了就可以下载准考证了⚠️⚠️***<br/>
+# ***⚠️⚠️当下面两个都红了就可以下载准考证了⚠️⚠️***<br/>
 考场查询：[![LiaoningExamWindow](https://github.com/CoolestEnoch/LiaoningPostgraduateExamListenser/actions/workflows/LiaoningExamWindow.yml/badge.svg)](https://github.com/CoolestEnoch/LiaoningPostgraduateExamListenser/actions/workflows/LiaoningExamWindow.yml)<br/>
 准考证下载：[![YanZhaoWang](https://github.com/CoolestEnoch/LiaoningPostgraduateExamListenser/actions/workflows/YanZhaoWang.yml/badge.svg)](https://github.com/CoolestEnoch/LiaoningPostgraduateExamListenser/actions/workflows/YanZhaoWang.yml)
 
