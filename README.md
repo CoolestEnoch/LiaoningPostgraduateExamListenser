@@ -1,2 +1,6 @@
-# LiaoningPostgraduateExamListenser
-辽宁考研准考证和考场信息监听器
+# 辽宁考研准考证和考场信息监听器
+
+
+
+原理：
+每十分钟运行一次workflow,当可以下载准考证或者考场信息的时候run fail并发送邮件到github绑定的邮箱里实现通知作用
