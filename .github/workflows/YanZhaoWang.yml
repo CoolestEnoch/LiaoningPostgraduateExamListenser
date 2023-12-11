@@ -3,6 +3,8 @@ name: Scheduled Workflow
 on:
   workflow_dispatch:
   push:
+  schedule:
+    - cron: 10 16 * * *
 
 
 jobs:
@@ -19,7 +21,7 @@ jobs:
       - name: Execute Bash script
         run: |
 
-        
+
           #!/bin/bash
 
           git config user.name github-actions
@@ -36,13 +38,15 @@ jobs:
           fi
 
           # 添加注释符号
-          sed -i 's/schedule:\n    - cron:/#&/' "$FILE"
+          sed -i 's/#push:/#&/' .github/workflows/YanZhaoWang.yml
+          sed -i 's/schedule:/#&/' .github/workflows/YanZhaoWang.yml
+          sed -i '/cron:/,+1 s/^/#/' .github/workflows/YanZhaoWang.yml
 
           echo "成功在工作流程文件 $FILE 中添加注释符号"
 
 
 
-          
+
           git add -u .
           git commit -m "update"
           git push
@@ -52,9 +56,8 @@ jobs:
           # echo "$content"
           if [[ $content == *准考证* ]]; then
             echo "已开放准考证打印"
-            echo "Found a link with text 'A'. Disabling workflow..."
-            echo "::set-env name=DISABLE_WORKFLOW::true"
+            exit 1
           else
             echo "未开放准考证打印"
-            exit 0  # 如果文本内容不为"A"，则以退出码1退出
+            exit 0
           fi
