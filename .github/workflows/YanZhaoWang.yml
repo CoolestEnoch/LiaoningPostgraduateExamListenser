@@ -20,15 +20,7 @@ jobs:
 
       - name: Execute Bash script
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
           ls -al
-
-
-
-          git add -u .
-          git commit -m "update by actions"
-          git push
 
           content=$(curl -s "https://yz.chsi.com.cn/yzwb/" | grep -oP '<div class="yzwb-current-time">\K.*?(?=<)')
 
@@ -41,6 +33,11 @@ jobs:
             #sed -i 's/#schedule:/#&/' .github/workflows/YanZhaoWang.yml
             #sed -i '/cron:/,+1 s/^/#/' .github/workflows/YanZhaoWang.yml
             sed -i '5,7 s/^/#/' .github/workflows/YanZhaoWang.yml
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git add -u .
+            git commit -m "update by actions"
+            git push
             echo "成功禁用当前workflow"
 
             exit 1
