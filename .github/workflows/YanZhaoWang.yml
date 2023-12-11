@@ -27,10 +27,10 @@ jobs:
             echo "::set-env name=DISABLE_WORKFLOW::true"
           else
             echo "未开放准考证打印"
-            exit 1  # 如果文本内容不为"A"，则以退出码1退出
+            exit 0  # 如果文本内容不为"A"，则以退出码1退出
           fi
          
 
       - name: Disable Workflow
         if: env.DISABLE_WORKFLOW == 'true'
-        run: echo "This workflow has been disabled." && exit 0
+        run: echo "This workflow has been disabled." && exit 1
