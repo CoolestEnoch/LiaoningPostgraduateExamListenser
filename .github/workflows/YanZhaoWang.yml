@@ -18,6 +18,15 @@ jobs:
           
           #!/bin/bash
 
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git clone https://github.com/CoolestEnoch/LiaoningPostgraduateExamListenser
+          cd LiaoningPostgraduateExamListenser
+          echo "#test" >> /.github/workflows/YanZhaoWang.yml
+          git add -u .
+          git commit -m "update"
+          git push
+
           content=$(curl -s "https://yz.chsi.com.cn/yzwb/" | grep -oP '<div class="yzwb-current-time">\K.*?(?=<)')
 
           # echo "$content"
