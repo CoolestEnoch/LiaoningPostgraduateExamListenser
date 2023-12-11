@@ -1,10 +1,10 @@
-name: Scheduled Workflow
+name: YanZhaoWang
 
 on:
   workflow_dispatch:
-#  push:
-#  schedule:
-#    - cron: 10 16 * * *
+  push:
+  schedule:
+    - cron: '*/10 * * * *'
 
 
 jobs:
@@ -20,37 +20,30 @@ jobs:
 
       - name: Execute Bash script
         run: |
-
-
-          #!/bin/bash
-
           git config user.name github-actions
           git config user.email github-actions@github.com
           ls -al
 
 
-          # 添加注释符号
-          #sed -i 's/#push:/#&/' .github/workflows/YanZhaoWang.yml
-          #sed -i 's/#schedule:/#&/' .github/workflows/YanZhaoWang.yml
-          #sed -i '/cron:/,+1 s/^/#/' .github/workflows/YanZhaoWang.yml
-          sed -i '5,7 s/^/#/' .github/workflows/YanZhaoWang.yml
-          echo "成功在工作流程文件 $FILE 中添加注释符号"
-
-
-
-
           git add -u .
-          git commit -m "update"
+          git commit -m "update by actions"
           git push
 
           content=$(curl -s "https://yz.chsi.com.cn/yzwb/" | grep -oP '<div class="yzwb-current-time">\K.*?(?=<)')
 
           # echo "$content"
-          if [[ $content == *准考证* ]]; then
+          if [[ $content == *确认* ]]; then
             echo "已开放准考证打印"
-            echo "Found a link with text 'A'. Disabling workflow..."
-            echo "::set-env name=DISABLE_WORKFLOW::true"
+            
+            # 添加注释符号
+            #sed -i 's/#push:/#&/' .github/workflows/YanZhaoWang.yml
+            #sed -i 's/#schedule:/#&/' .github/workflows/YanZhaoWang.yml
+            #sed -i '/cron:/,+1 s/^/#/' .github/workflows/YanZhaoWang.yml
+            sed -i '5,7 s/^/#/' .github/workflows/YanZhaoWang.yml
+            echo "成功禁用当前workflow"
+
+            exit 1
           else
             echo "未开放准考证打印"
-            exit 0  # 如果文本内容不为"A"，则以退出码1退出
+            exit 0
           fi
