@@ -21,7 +21,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           ls -al
-          echo "#test" >> /.github/workflows/YanZhaoWang.yml
+          echo "#test" >> .github/workflows/YanZhaoWang.yml
           git add -u .
           git commit -m "update"
           git push
