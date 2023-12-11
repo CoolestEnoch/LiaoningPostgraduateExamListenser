@@ -3,9 +3,9 @@ name: Scheduled Workflow
 on:
   workflow_dispatch:
   push:
-  schedule:
-    - cron: 10 16 * * *
-
+  #schedule:
+#    - cron: 10 16 * * *
+#
 
 jobs:
   check_links:
@@ -38,10 +38,10 @@ jobs:
           fi
 
           # 添加注释符号
-          sed -i 's/#push:/#&/' .github/workflows/YanZhaoWang.yml
-          sed -i 's/schedule:/#&/' .github/workflows/YanZhaoWang.yml
-          sed -i '/cron:/,+1 s/^/#/' .github/workflows/YanZhaoWang.yml
-
+          sed -i 's/##push:/#&/' .github/workflows/YanZhaoWang.yml
+          sed -i 's/#schedule:/#&/' .github/workflows/YanZhaoWang.yml
+#          sed -i '/cron:/,+1 s/^/#/' .github/workflows/YanZhaoWang.yml
+#
           echo "成功在工作流程文件 $FILE 中添加注释符号"
 
 
