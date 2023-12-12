@@ -23,7 +23,14 @@ jobs:
           ls -al
 
           url="https://www.lnzsks.com/cxzx.html"
-          content=$(curl -s "$url")
+          timeout=20
+          content=$(curl  --connect-timeout $timeout -s "$url")
+          if [ $? -eq 0 ]; then
+            echo "查询超时"
+            exit 2
+          fi
+
+          echo "$content"
 
           # 使用awk和sed将<div class="cxzx_btn">标签中的所有<a>标签提取出来
           links=$(echo "$content" | awk '/<div class="cxzx_btn"/,/<\/div>/ {print}' | sed -n '/<a/p')
