@@ -22,26 +22,36 @@ jobs:
         run: |
           ls -al
 
-          content=$(curl -s "https://yz.chsi.com.cn/yzwb/" | grep -oP '<div class="yzwb-current-time">\K.*?(?=<)')
+          url="https://yz.chsi.com.cn/yzwb/"
+          timeout=20
+          target_string="准考证"
 
-          # echo "$content"
-          if [[ $content == *准考证* ]]; then
-            echo "已开放准考证打印"
-            
-            # 添加注释符号
-            #sed -i 's/#push:/#&/' .github/workflows/YanZhaoWang.yml
-            #sed -i 's/#schedule:/#&/' .github/workflows/YanZhaoWang.yml
-            #sed -i '/cron:/,+1 s/^/#/' .github/workflows/YanZhaoWang.yml
-            sed -i '5,7 s/^/#/' .github/workflows/YanZhaoWang.yml
-            git config user.name github-actions
-            git config user.email github-actions@github.com
-            git add -u .
-            git commit -m "update by actions"
-            git push
-            echo "成功禁用当前workflow"
 
-            exit 1
+          content=$(curl --connect-timeout $timeout -s "https://yz.chsi.com.cn/yzwb/" | grep -oP '<div class="yzwb-current-time">\K.*?(?=<)')
+
+          if [ $? -eq 0 ]; then
+            echo "$content"
+            if [[ $content == *"$target_string"* ]]; then
+              echo "已开放准考证打印"
+
+              # 添加注释符号
+              #sed -i 's/#push:/#&/' .github/workflows/YanZhaoWang.yml
+              #sed -i 's/#schedule:/#&/' .github/workflows/YanZhaoWang.yml
+              #sed -i '/cron:/,+1 s/^/#/' .github/workflows/YanZhaoWang.yml
+              sed -i '5,7 s/^/#/' .github/workflows/YanZhaoWang.yml
+              git config user.name github-actions
+              git config user.email github-actions@github.com
+              git add -u .
+              git commit -m "update by actions"
+              git push
+              echo "成功禁用当前workflow"
+
+              exit 1
+            else
+              echo "未开放准考证打印"
+              exit 0
+            fi
           else
-            echo "未开放准考证打印"
-            exit 0
+            echo "Request timed out"
+            exit 2
           fi
