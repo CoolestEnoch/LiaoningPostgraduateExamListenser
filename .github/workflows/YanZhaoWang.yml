@@ -27,7 +27,7 @@ jobs:
           target_string="准考证"
 
 
-          content=$(curl --referer https://www.baidu.com/s?wd=yzw --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" --referer https://www.baidu.com/s?wd=lnkszc --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" --connect-timeout $timeout -s "https://yz.chsi.com.cn/yzwb/" | grep -oP '<div class="yzwb-current-time">\K.*?(?=<)')
+          content=$(curl --referer "https://www.baidu.com/s?wd=yzw" --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" --referer https://www.baidu.com/s?wd=lnkszc --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" --connect-timeout $timeout -s "https://yz.chsi.com.cn/yzwb/" | grep -oP '<div class="yzwb-current-time">\K.*?(?=<)')
 
           if [ $? -eq 0 ]; then
             echo "$content"
