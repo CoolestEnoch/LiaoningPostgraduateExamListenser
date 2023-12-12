@@ -52,6 +52,6 @@ jobs:
               exit 0
             fi
           else
-            echo "Request timed out"
+            echo "查询超时"
             exit 2
           fi
