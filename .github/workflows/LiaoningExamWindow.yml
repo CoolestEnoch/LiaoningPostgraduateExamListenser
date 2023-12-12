@@ -25,7 +25,7 @@ jobs:
           url="https://www.lnzsks.com/cxzx.html"
           timeout=20
           content=$(curl --referer "https://www.baidu.com/s?wd=lnkszc" --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" --connect-timeout $timeout -s "$url")
-          if [ $? -eq 0 ]; then
+          if [ $? -ne 0 ]; then
             echo "查询超时"
             exit 2
           fi
